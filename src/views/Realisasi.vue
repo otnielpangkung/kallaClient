@@ -1,21 +1,273 @@
 <template>
-  <div></div>
+  <div class="Realisasi">
+    <p class="mt-3" id="head">DATA BP</p>
+
+    <button @click.prevent="showAdd" class="btn btn-primary">Tambahkan BP</button>
+    <!-- Modal -->
+    <div class="modal fade" id="modalForm" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-body">
+            <form @submit.prevent="editStatus ? editRealisasi() : addRealisasi()">
+              <div class="form-row mb-1">
+                <div class="col-sm">
+                  <label class="my-1 mr-2" for="Username">Tanggal</label>
+                  <div class="input-group">
+                    <input type="date" class="form-control" v-model="tanggal" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-row mb-1">
+                <div class="col-sm">
+                  <label class="my-1 mr-2" for="RelasiId">No.Wo - Relasi - Lokasi</label>
+                  <div class="input-group">
+                    <select
+                      class="form-control"
+                      id="RelasiId"
+                      v-model="NomorWoId"
+                      aria-placeholder="Relasi"
+                      required
+                    >
+                      <option selected disabled value="0">Pilih WO</option>
+                      <option
+                        v-for="wo in this.nomorWo()"
+                        :key="wo.id"
+                        :value="wo.id"
+                      >{{wo.namaWo}} - {{wo.Relasi.namaRelasi}} - {{wo.Schedule.lokasi}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-sm">
+                  <label class="my-1 mr-2" for="volume">Mulai :</label>
+                  <div class="input-group mt-1">
+                    <input
+                      type="time"
+                      placeholder="No. TN"
+                      class="form-control"
+                      v-model="waktuMulai"
+                    />
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <label class="my-1 mr-2" for="volume">Selesai :</label>
+                  <div class="input-group mt-1">
+                    <input type="time" class="form-control" v-model="waktuSelesai" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-sm">
+                  <div class="input-group mt-1">
+                    <input type="number" placeholder="SO" class="form-control" v-model="so" />
+                  </div>
+                </div>
+
+                <div class="col-sm">
+                  <div class="input-group mt-1">
+                    <input
+                      type="number"
+                      placeholder="Shipment"
+                      class="form-control"
+                      v-model="shipment"
+                    />
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="input-group mt-1">
+                    <input
+                      type="text"
+                      placeholder="Bongkar"
+                      class="form-control"
+                      v-model="bongkar"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-sm">
+                  <div class="input-group mt-1">
+                    <input
+                      type="text"
+                      placeholder="No. TM:"
+                      class="form-control"
+                      v-model="noTm"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="col-sm">
+                  <div class="input-group mt-1">
+                    <input
+                      type="text"
+                      placeholder="No. Tiket"
+                      class="form-control"
+                      v-model="noTiket"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="input-group mt-1">
+                    <input
+                      type="number"
+                      step="any"
+                      placeholder="Volume"
+                      class="form-control"
+                      v-model="volume"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col-sm">
+                  <div class="input-group mt-1">
+                    <input type="text" placeholder="Driver" class="form-control" v-model="driver" />
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="input-group mt-1">
+                    <input
+                      type="number"
+                      step="any"
+                      placeholder="Cipping"
+                      class="form-control"
+                      v-model="cipping"
+                    />
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="input-group mt-1">
+                    <input
+                      type="number"
+                      placeholder="Split"
+                      step="any"
+                      class="form-control"
+                      v-model="split"
+                    />
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="input-group mt-1">
+                    <input
+                      type="number"
+                      placeholder="Pasir"
+                      step="any"
+                      class="form-control"
+                      v-model="pasir"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-sm">
+                  <div class="input-group mt-1">
+                    <input
+                      type="number"
+                      placeholder="Semen"
+                      step="any"
+                      class="form-control"
+                      v-model="semen"
+                    />
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="input-group mt-1">
+                    <input
+                      type="number"
+                      step="any"
+                      placeholder="additive  Cair"
+                      class="form-control"
+                      v-model="additiveCair"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-sm">
+                  <div class="input-group mt-1 mb-3">
+                    <input type="text" placeholder="Kendala" class="form-control" v-model="kendala" />
+                  </div>
+                </div>
+              </div>
+              <button v-if="!editStatus" class="btn btn-secondary" type="submit">Tambahkan</button>
+              <button v-if="editStatus" class="btn btn-secondary" type="submit">Edit</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Tanggal -->
+    <div class="tanggal">
+      <div class="input-group col col-lg-7">
+        <label class="my-1 mr-2" for="Username">Tanggal :</label>
+        <input type="date" class="form-control mr-3" v-model="startDate" /> -
+        <input type="date" class="form-control ml-3" v-model="endDate" />
+        <button id="download" class="btn" @click.prevent="tableHtmlToExcel('table')">
+          <i class="fa fa-download"></i> Download
+        </button>
+      </div>
+    </div>
+    <!-- Table -->
+    <div class="tableView">
+      <div class="overflow-auto">
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="filterData().length"
+          :per-page="perPage"
+          aria-controls="my-table"
+        ></b-pagination>
+
+        <b-table
+          id="my-table"
+          :items="filterData()"
+          :per-page="perPage"
+          :current-page="currentPage"
+          :fields="fields"
+          striped
+          small
+        >
+          <template #cell(tanggal)="row">{{ formatTanggal(row.value) }}</template>
+          <template #cell(pasir)="row">{{ getJumlah(row.value) }}</template>
+          <template #cell(split)="row">{{ getJumlah(row.value) }}</template>
+          <template #cell(cipping)="row">{{ getJumlah(row.value) }}</template>
+          <template #cell(semen)="row">{{ getJumlah(row.value) }}</template>
+          <template #cell(action)="row">
+            <a @click.prevent="showEdit(row.item)">
+              <i class="fas fa-edit" title="edit"></i>
+            </a>
+            <a @click.prevent="confirmDelete(row.item.id)">
+              <i class="fas fa-trash"></i>
+            </a>
+          </template>
+        </b-table>
+      </div>
+    </div>
+    {{this.startDate }} {{this.endDate}}
+  </div>
 </template>
 
 <script>
 import moment from "moment";
 import axios from "../API/axios";
 import Swal from "sweetalert2";
-import { BTable, BPagination } from "bootstrap-vue";
 
 export default {
-  name: "Home",
-  // components: {
-  //   BTable,
-  //   BPagination
-  // },
+  name: "Realisasi",
   data() {
     return {
+      perPage: 15,
+      currentPage: 1,
+      filter: null,
       editStatus: false,
       id: 0,
       RelasiId: 0,
@@ -45,11 +297,9 @@ export default {
       totalPage: 0,
       currentPage: 0,
       namaWo: "",
-      perPage: 20,
-      currentPage: 1,
       fields: [
         {
-          key: "nomorwo",
+          key: "NomorWo.namaWo",
           label: "Nomor WO",
           class: "text-center"
         },
@@ -149,19 +399,16 @@ export default {
   },
   computed: {
     relasiUser() {
-      return this.$store.state.relasiUser;
+      return this.$store.state.relasiUser.rows;
     },
     realisasiUser() {
-      return this.$store.state.realisasiUser;
+      return this.$store.state.realisasiUser.rows;
     },
     sheduleUser() {
-      return this.$store.state.scheduleUser;
+      return this.$store.state.scheduleUser.rows;
     },
     nomorWoUser() {
-      return this.$store.state.nomorWoUser;
-    },
-    tableData() {
-      return this.filterData();
+      return this.$store.state.nomorWoUser.rows;
     },
     rows() {
       return this.filterData().length;
@@ -229,12 +476,9 @@ export default {
     filterData() {
       let hasil = [];
       if (!this.startDate || !this.endDate) {
-        //this.realisasuiUser == [];
-        //this.realisasiUser.rows;
-        //[].rows;
-        hasil = this.realisasiUser.rows || [];
+        hasil = this.realisasiUser;
       } else {
-        this.realisasiUser.rows?.map(item => {
+        this.realisasiUser?.map(item => {
           let start = moment(this.startDate, "YYYY/MM/DD") - 1;
           let end = moment(this.endDate, "YYYY/MM/DD") + 1;
           let tanggalItem = moment(item.tanggal, "YYYY/MM/DD");
@@ -243,8 +487,13 @@ export default {
           }
         });
       }
-      console.log(hasil);
       return hasil;
+    },
+    getJumlah(data) {
+      if (data == "NaN") {
+        data = 0;
+      }
+      return data;
     },
     nomorWo() {
       let hasil = [];
@@ -255,59 +504,59 @@ export default {
       });
       return hasil;
     },
-    // filterData2(page) {
-    //   let hasil = [];
-    //   if (!page) {
-    //     page = 1;
-    //   }
-    //   let dataPerPage = 1000;
-    //   if (!this.startDate || !this.endDate) {
-    //     hasil = this.realisasiUser;
-    //     this.totalData = this.penm.length;
-    //     this.totalPage = Math.ceil(this.totalData / dataPerPage);
+    filterData2(page) {
+      let hasil = [];
+      if (!page) {
+        page = 1;
+      }
+      let dataPerPage = 1000;
+      if (!this.startDate || !this.endDate) {
+        hasil = this.realisasiUser;
+        this.totalData = this.penm.length;
+        this.totalPage = Math.ceil(this.totalData / dataPerPage);
 
-    //     if (page) {
-    //       let end = page * dataPerPage;
-    //       let start = end - dataPerPage;
-    //       if (page == 1) {
-    //         start = 0;
-    //       }
-    //       this.penm = this.penm.slice(start, end);
-    //     }
-    //   } else {
-    //     // console.log("haloos");
-    //     let data = {
-    //       startDate: this.startDate,
-    //       endDate: this.endDate
-    //     };
-    //     return axios({
-    //       method: "get",
-    //       headers: { access_token: localStorage.getItem("access_token") },
-    //       url: "/database/schedule/user/periode",
-    //       params: data
-    //     })
-    //       .then(({ data }) => {
-    //         hasil = data;
-    //         this.totalData = this.penm.length;
-    //         this.totalPage = Math.ceil(this.totalData / dataPerPage);
-    //         if (page) {
-    //           let end = page * dataPerPage;
-    //           let start = end - dataPerPage;
-    //           if (page == 1) {
-    //             start = 0;
-    //           }
-    //           this.penm = this.penm.slice(start, end);
-    //         }
-    //       })
-    //       .catch(err => {
-    //         console.log(err);
-    //       })
-    //       .finally(() => {
-    //         // console.log(this.penm, "selesai");
-    //       });
-    //     return hasil;
-    //   }
-    // },
+        if (page) {
+          let end = page * dataPerPage;
+          let start = end - dataPerPage;
+          if (page == 1) {
+            start = 0;
+          }
+          this.penm = this.penm.slice(start, end);
+        }
+      } else {
+        // console.log("haloos");
+        let data = {
+          startDate: this.startDate,
+          endDate: this.endDate
+        };
+        return axios({
+          method: "get",
+          headers: { access_token: localStorage.getItem("access_token") },
+          url: "/database/schedule/user/periode",
+          params: data
+        })
+          .then(({ data }) => {
+            hasil = data;
+            this.totalData = this.penm.length;
+            this.totalPage = Math.ceil(this.totalData / dataPerPage);
+            if (page) {
+              let end = page * dataPerPage;
+              let start = end - dataPerPage;
+              if (page == 1) {
+                start = 0;
+              }
+              this.penm = this.penm.slice(start, end);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+          .finally(() => {
+            // console.log(this.penm, "selesai");
+          });
+        return hasil;
+      }
+    },
     formatTanggal(data) {
       let hasil = "";
       var time = moment(data).format("DD-MM-YYYY h:mm:ss");
@@ -564,7 +813,5 @@ table thead {
   width: 85vw;
   overflow-x: scroll;
   overflow-y: scroll;
-}
-@media screen and (max-width: 800px) {
 }
 </style>
