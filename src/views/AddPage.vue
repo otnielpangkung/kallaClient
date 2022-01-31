@@ -1,5 +1,7 @@
 <template>
-
+<div class="addPage">
+  
+</div>
 
 </template>
 
