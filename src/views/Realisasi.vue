@@ -252,7 +252,8 @@
         </b-table>
       </div>
     </div>
-    {{this.startDate }} {{this.endDate}}
+
+    <!-- {{this.nomorWoUser}} -->
   </div>
 </template>
 

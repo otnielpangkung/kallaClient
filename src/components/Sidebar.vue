@@ -10,6 +10,11 @@
             </router-link>
           </li>
           <li v-if="this.role == 'staff'">
+            <router-link to="/addpage">
+              <i class="fas fa-plus"></i> AddPage
+            </router-link>
+          </li>
+          <li v-if="this.role == 'staff'">
             <router-link to="/schedule">
               <i class="fas fa-tasks"></i> Schedule
             </router-link>

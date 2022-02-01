@@ -9,7 +9,7 @@ import Relasi from "../views/Relasi.vue"
 import Items from "../views/Items.vue"
 import Solar from "../views/Solar.vue"
 import LaporanProduksi from "../views/LaporanProduksi.vue"
-
+import AddPage from "../views/AddPage.vue"
 
 import AllSchedule from "../views/AllSchedule.vue"
 import AllRealisasi from "../views/AllRealisasi.vue"
@@ -33,6 +33,11 @@ const routes = [
     path: '/login',
     name: 'Loginpage',
     component: Loginpage
+  },
+  {
+    path: '/addpage',
+    name: 'AddPage',
+    component: AddPage
   },
   {
     path: '/dashboard',

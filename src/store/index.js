@@ -139,7 +139,7 @@ export default new Vuex.Store({
           access_token: localStorage.getItem("access_token")
         }
       }).then(({ data }) => {
-        // console.log(data, "====");
+        console.log(data.rows, "====xxxx");
         context.commit("setNomorWo", data)
       }).catch(err => {
         console.log(err);
