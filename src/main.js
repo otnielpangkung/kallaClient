@@ -5,7 +5,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
-
+import UUID from "vue-uuid";
 Vue.config.productionTip = false
 
 
@@ -36,7 +36,7 @@ Vue.use(BootstrapVueIcons)
 // Vue.use(TablePlugin)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+Vue.use(UUID);
 
 new Vue({
   router,

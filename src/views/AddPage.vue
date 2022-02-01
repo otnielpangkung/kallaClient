@@ -1,7 +1,8 @@
 <template>
   <div class="addPage">
     <div class="formRow mt-2">
-      <div class="form-row" v-for="item in this.items" :key="item">
+      <div class="form-row" v-for="item in this.items" :key="item.id">
+        {{uuid}}
         <div class="col-sm">
           <label for="item.nama">Tanggal</label>
           <input type="date" required class="form-control" v-model="item.tanggal" />
@@ -86,22 +87,36 @@
           <label for="so">Addictive Cair</label>
           <input type="number" class="form-control" v-model="item.additiveCair" />
         </div>
+        <button
+          id="extButton"
+          class="ml-2 mr-3"
+          variant="outline-primary"
+          @click.prevent="deleteRow(item)"
+        >-</button>
+        <button id="extButton" variant="outline-primary" @click.prevent="addRow">+</button>
       </div>
     </div>
     <!-- {{items}} -->
+    {{this.nomorWoUser}}
     <b-button class="mt-3 mr-3" variant="outline-primary" @click.prevent="addRow">Tambah Baris</b-button>
     <b-button class="mt-3" variant="outline-success" @click.prevent="addRow">Input Data</b-button>
   </div>
 </template>
 
 <script>
+import { uuid } from "vue-uuid";
 import axios from "../API/axios";
+
 export default {
   name: "AddPage",
   data() {
     return {
       tanggal: "2022-01-01",
-      items: [{}]
+      items: [
+        {
+          id: uuid.v1()
+        }
+      ]
     };
   },
   computed: {
@@ -126,8 +141,13 @@ export default {
   },
   methods: {
     addRow() {
-      let lastData = this.items[this.items.length - 1];
-      this.items.push({ ...lastData });
+      // let lastData = this.items[this.items.length - 1];
+      // this.items.push({ ...lastData });
+
+      this.items = [
+        ...this.items,
+        { id: uuid.v1(), ...this.items[this.items.length - 1] }
+      ];
     },
     nomorWo() {
       let hasil = [];
@@ -137,6 +157,18 @@ export default {
         }
       });
       return hasil;
+    },
+    deleteRow(data) {
+      if (this.items.length > 1) {
+        const newItems = this.items.filter(i => i.id !== data.id);
+        // alert(i.id);
+        console.log(newItems, "-----------");
+        this.items = newItems;
+      } else {
+        this.items = [{ id: uuid.v1() }];
+      }
+      // console.log(uuid.v1());
+      // alert(data);
     }
   }
 };
@@ -150,5 +182,8 @@ export default {
   width: 85vw;
   overflow-x: scroll;
   /* overflow-y: scroll; */
+}
+#extButton {
+  font-size: 20px;
 }
 </style>
