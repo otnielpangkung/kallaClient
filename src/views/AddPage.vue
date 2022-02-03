@@ -5,7 +5,13 @@
         {{uuid}}
         <div class="col-sm">
           <label for="item.nama">Tanggal</label>
-          <input type="date" required class="form-control" v-model="item.tanggal" />
+          <input
+            @change="changeDate"
+            type="date"
+            required
+            class="form-control"
+            v-model="item.tanggal"
+          />
         </div>
         <div class="col-sm">
           <label for="item.nama">Nomor Wo</label>
@@ -18,7 +24,7 @@
           >
             <option selected disabled value="0">Pilih WO</option>
             <option
-              v-for="wo in nomorWo()"
+              v-for="wo in nomorWo(item)"
               :key="wo.id"
               :value="wo.id"
             >{{wo.namaWo}} - {{wo.Relasi.namaRelasi}} - {{wo.Schedule.lokasi}}</option>
@@ -27,7 +33,7 @@
         <div class="col-sm">
           <label for="volume">Mulai :</label>
           <div class="input-group">
-            <input type="time" placeholder="No. TN" class="form-control" v-model="waktuMulai" />
+            <input type="time" placeholder="No. TN" class="form-control" v-model="item.waktuMulai" />
           </div>
         </div>
         <div class="col-sm">
@@ -67,10 +73,7 @@
           <label for="so">Cipping</label>
           <input type="number" class="form-control" v-model="item.cipping" />
         </div>
-        <div class="col-sm">
-          <label for="so">Cipping</label>
-          <input type="number" class="form-control" v-model="item.cipping" />
-        </div>
+
         <div class="col-sm">
           <label for="so">Split</label>
           <input type="number" class="form-control" v-model="item.split" />
@@ -92,14 +95,13 @@
           class="ml-2 mr-3"
           variant="outline-primary"
           @click.prevent="deleteRow(item)"
-        >-</button>
-        <button id="extButton" variant="outline-primary" @click.prevent="addRow">+</button>
+        >Hapus</button>
       </div>
     </div>
-    <!-- {{items}} -->
-    {{this.nomorWoUser}}
+
+    <!-- {{this.nomorWoUser}} -->
     <b-button class="mt-3 mr-3" variant="outline-primary" @click.prevent="addRow">Tambah Baris</b-button>
-    <b-button class="mt-3" variant="outline-success" @click.prevent="addRow">Input Data</b-button>
+    <b-button class="mt-3" variant="outline-success" @click.prevent="inputData()">Input Data</b-button>
   </div>
 </template>
 
@@ -111,7 +113,7 @@ export default {
   name: "AddPage",
   data() {
     return {
-      tanggal: "2022-01-01",
+      // tanggal: "2022-01-01",
       items: [
         {
           id: uuid.v1()
@@ -140,30 +142,63 @@ export default {
     this.$store.dispatch("getNomorWo");
   },
   methods: {
+    inputData() {
+      let datas = this.items;
+      return (
+        axios({
+          method: "post",
+          data: datas,
+          headers: { access_token: localStorage.getItem("access_token") },
+          url: "/database/manyrealisasi"
+        })
+          // .post("/database/manyrealisasi", {
+          //   datas: this.items,
+          //   headers: {
+          //     access_token: localStorage.getItem("access_token")
+          //   }
+          // })
+          .then(data => {
+            alert("ok");
+            this.$store.dispatch("fetchRealisasiUser");
+            this.items = [
+              {
+                id: uuid.v1()
+              }
+            ];
+          })
+          .catch(err => {
+            alert(err);
+            res.status(404).json(err);
+          })
+      );
+    },
     addRow() {
       // let lastData = this.items[this.items.length - 1];
       // this.items.push({ ...lastData });
-
-      this.items = [
-        ...this.items,
-        { id: uuid.v1(), ...this.items[this.items.length - 1] }
-      ];
+      const newItem = { ...this.items[this.items.length - 1] };
+      newItem.id = uuid.v1();
+      this.items = [...this.items, newItem];
     },
-    nomorWo() {
+    nomorWo(data) {
       let hasil = [];
       this.nomorWoUser?.map(el => {
-        if (el.tanggal.slice(0, 10) == this.tanggal) {
+        if (el.tanggal.slice(0, 10) == data.tanggal) {
           hasil.push(el);
         }
       });
       return hasil;
     },
+    changeDate(data) {
+      console.log(data.target.value, "data");
+    },
     deleteRow(data) {
+      // console.log(data, "data--------");
+      // console.log(this.items, "this.items");
       if (this.items.length > 1) {
         const newItems = this.items.filter(i => i.id !== data.id);
         // alert(i.id);
-        console.log(newItems, "-----------");
         this.items = newItems;
+        // console.log(newItems, "-----------");
       } else {
         this.items = [{ id: uuid.v1() }];
       }
@@ -182,8 +217,5 @@ export default {
   width: 85vw;
   overflow-x: scroll;
   /* overflow-y: scroll; */
-}
-#extButton {
-  font-size: 20px;
 }
 </style>
