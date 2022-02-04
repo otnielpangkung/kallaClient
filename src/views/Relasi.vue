@@ -63,7 +63,7 @@
           <input type="date" class="form-control mr-3" v-model="startDate" /> -
           <input type="date" class="form-control ml-3" v-model="endDate" />
         </div>
-        <table class="table table-hover table-striped table-bordered" id="relasiTable">
+        <table class="table-hover table-striped table-bordered" id="relasiTable">
           <thead class="table">
             <th>Nama Relasi</th>
             <th>Alamat</th>
@@ -369,6 +369,7 @@ button:hover {
   font-family: "Roboto Condensed", sans-serif;
 }
 table {
+  /* min-width: 80vw; */
   margin-top: 30px;
 }
 table td,

@@ -45,8 +45,8 @@ export default {
   display: flex;
 }
 @media screen and(max-width: 800px) {
-  .mainPage {
-    padding: 0;
+  * {
+    display: none;
   }
 }
 </style>

@@ -219,7 +219,7 @@ nav {
 nav a {
   color: #038c3e;
 }
-@media screen and (max-width: 800px) {
+/* @media screen and (max-width: 800px) {
   #nav {
     width: 100%;
   }
@@ -231,7 +231,7 @@ nav a {
   img {
     width: 200px;
   }
-}
+} */
 
 @media screen and (min-width: 800px) {
   li {

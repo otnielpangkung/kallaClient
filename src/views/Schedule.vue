@@ -583,7 +583,7 @@ button:hover {
   /* background-color: springgreen; */
 }
 table {
-  min-width: 1500px;
+  min-width: 1800px;
 }
 .tableView {
   max-height: 800px;

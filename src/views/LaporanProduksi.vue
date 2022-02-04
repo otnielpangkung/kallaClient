@@ -146,6 +146,17 @@
             ></i>
             {{cekSelisih(getTotal(row.item.Realisasis, row.item.Item).selisihCipping).nilai}}
           </template>
+          <!-- <template #cell(cippingSelisih)="row">
+            <i
+              v-if="cekSelisih(getTotal(row.item.Realisasis, row.item.Item).selisihCipping).cek"
+              class="fas fa-arrow-up"
+            ></i>
+            <i
+              v-if="!cekSelisih(getTotal(row.item.Realisasis, row.item.Item).selisihCipping).cek"
+              class="fas fa-arrow-down"
+            ></i>
+            {{cekSelisih(getTotal(row.item.Realisasis, row.item.Item).selisihCipping).nilai}}
+          </template>-->
           <!-- Split -->
           <template
             #cell(splitReal)="row"
@@ -155,10 +166,6 @@
           >{{ getTotal(row.item.Realisasis, row.item.Item).stdSplit }}</template>
           <template #cell(splitM3)="row">{{ getTotal(row.item.Realisasis, row.item.Item).m3Split }}</template>
           <template #cell(splitSelisih)="row">
-            <i
-              v-if="cekSelisih(getTotal(row.item.Realisasis, row.item.Item).selisihSplit).cek"
-              class="fas fa-arrow-up"
-            ></i>
             <i
               v-if="!cekSelisih(getTotal(row.item.Realisasis, row.item.Item).selisihSplit).cek"
               class="fas fa-arrow-down"
@@ -671,7 +678,7 @@ th {
   font-family: "Roboto Condensed", sans-serif;
 }
 table {
-  min-width: 2300px;
+  min-width: 2900px;
   margin-bottom: 20px;
 }
 table tbody {
