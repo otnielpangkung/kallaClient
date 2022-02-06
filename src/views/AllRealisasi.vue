@@ -356,31 +356,4 @@
 		background-color: transparent;
 		color: rgb(72, 66, 33);
 	}
-	@media screen and (max-width: 800px) {
-		#head {
-			font-weight: 500;
-			font-size: 25px;
-		}
-		button {
-			font-size: 12px;
-		}
-		.tableView {
-			padding-right: 10px;
-			max-height: 400px;
-			margin-bottom: 2px;
-			margin-right: 10px;
-			width: 100vw;
-			overflow-x: scroll;
-			overflow-y: scroll;
-		}
-		table tbody {
-			padding: 0;
-			text-align: right;
-		}
-		table tbody td,
-		th {
-			font-size: 12px;
-			padding: 2px 1px;
-		}
-	}
 </style>
