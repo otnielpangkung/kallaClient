@@ -21,7 +21,7 @@
 				<button
 					id="download"
 					class="btn"
-					@click.prevent="tableHtmlToExcel('table')"
+					@click.prevent="tableHtmlToExcel('my-table')"
 				>
 					<i class="fa fa-download"></i> Download
 				</button>
